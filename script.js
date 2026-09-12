@@ -17,56 +17,56 @@ function updateCountdown() {
         el('cdMinutes').textContent = '0';
         return;
     }
-    const days = Math.floor(diff / 86400000);
-    const hours = Math.floor((diff % 86400000) / 3600000);
-    const minutes = Math.floor((diff % 3600000) / 60000);
-    el('cdDays').textContent = days;
-    el('cdHours').textContent = hours;
-    el('cdMinutes').textContent = minutes;
+    el('cdDays').textContent = Math.floor(diff / 86400000);
+    el('cdHours').textContent = Math.floor((diff % 86400000) / 3600000);
+    el('cdMinutes').textContent = Math.floor((diff % 3600000) / 60000);
 }
 updateCountdown();
 setInterval(updateCountdown, 30000);
 
+/* ---------- Modal ---------- */
+const modal = document.getElementById('modal');
+const openBtn = document.getElementById('openBtn');
+let lastFocus = null;
+
+function openModal() {
+    lastFocus = document.activeElement;
+    modal.hidden = false;
+    document.body.classList.add('modal-open');
+    requestAnimationFrame(() => {
+        modal.classList.add('is-open');
+        const first = modal.querySelector('#formView:not([hidden]) input, .success:not([hidden]) button');
+        if (first) first.focus();
+    });
+}
+function closeModal() {
+    modal.classList.remove('is-open');
+    document.body.classList.remove('modal-open');
+    setTimeout(() => { modal.hidden = true; }, 220);
+    if (lastFocus) lastFocus.focus();
+}
+
+openBtn.addEventListener('click', openModal);
+document.getElementById('closeBtn').addEventListener('click', closeModal);
+document.getElementById('modalBackdrop').addEventListener('click', closeModal);
+modal.querySelectorAll('[data-close]').forEach((b) => b.addEventListener('click', closeModal));
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !modal.hidden) closeModal();
+});
+
 /* ---------- Begleitpersonen ein-/ausblenden ---------- */
-const begleitungRadios = document.querySelectorAll('input[name="begleitung"]');
 const begleitField = document.getElementById('begleitpersonenField');
 const begleitInput = document.getElementById('begleitpersonen');
 
-begleitungRadios.forEach((r) => r.addEventListener('change', () => {
+document.querySelectorAll('input[name="begleitung"]').forEach((r) => r.addEventListener('change', () => {
     begleitField.hidden = document.querySelector('input[name="begleitung"]:checked').value !== 'ja';
 }));
 
 document.querySelectorAll('.stepper-btn').forEach((btn) => {
     btn.addEventListener('click', () => {
         const step = Number(btn.dataset.step);
-        const next = Math.min(20, Math.max(1, (Number(begleitInput.value) || 1) + step));
-        begleitInput.value = next;
+        begleitInput.value = Math.min(20, Math.max(1, (Number(begleitInput.value) || 1) + step));
     });
-});
-
-/* ---------- Kalender-Datei (.ics) ---------- */
-function buildIcs() {
-    const lines = [
-        'BEGIN:VCALENDAR',
-        'VERSION:2.0',
-        'PRODID:-//Sommerfest am Sonnenhang//DE',
-        'CALSCALE:GREGORIAN',
-        'BEGIN:VEVENT',
-        'UID:sommerfest-2027@sonnenhang',
-        'DTSTAMP:20260912T100000Z',
-        'DTSTART;VALUE=DATE:20270723',
-        'DTEND;VALUE=DATE:20270726',
-        'SUMMARY:Sommerfest am Sonnenhang',
-        'LOCATION:Am Sonnenhang 34\\, 71111 Waldenbuch',
-        'DESCRIPTION:Save the Date – Sommerfest am Sonnenhang mit Manuel\\, Cordula & Miriam. Details folgen im Frühjahr 2027.',
-        'END:VEVENT',
-        'END:VCALENDAR',
-    ];
-    return 'data:text/calendar;charset=utf-8,' + encodeURIComponent(lines.join('\r\n'));
-}
-['icsBtn', 'icsBtn2'].forEach((id) => {
-    const a = document.getElementById(id);
-    if (a) a.href = buildIcs();
 });
 
 /* ---------- Formular ---------- */
@@ -172,11 +172,8 @@ form.addEventListener('submit', async (ev) => {
     submitBtn.classList.add('is-loading');
     try {
         const result = await submit(payload);
-        if (result === 'duplicate') {
-            showView('duplicateView');
-        } else {
-            showSuccess(payload.vorname);
-        }
+        if (result === 'duplicate') showView('duplicateView');
+        else showSuccess(payload.vorname);
     } catch (err) {
         console.error(err);
         showError('Das hat leider nicht geklappt. Bitte versuch es gleich noch einmal oder schreib Manuel direkt per WhatsApp.');
@@ -190,7 +187,7 @@ function showView(id) {
     ['formView', 'successView', 'duplicateView'].forEach((v) => {
         document.getElementById(v).hidden = v !== id;
     });
-    document.getElementById('anmeldung').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    modal.querySelector('.modal-card').scrollTop = 0;
 }
 function showSuccess(name) {
     document.getElementById('successName').textContent = name || 'du';

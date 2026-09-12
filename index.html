@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Save the Date · Sommerfest am Sonnenhang 2027</title>
     <meta name="description" content="Save the Date: Sommerfest am Sonnenhang, 23.–25. Juli 2027 in Waldenbuch. Trag dich ein, damit wir dich mit allen Details versorgen können.">
     <meta name="robots" content="noindex">
@@ -18,12 +18,12 @@
 </head>
 <body>
 
-    <!-- Hero -->
-    <header class="hero" id="hero">
+    <main class="hero" id="hero">
         <div class="hero-image">
-            <img src="hero.jpg" alt="Kunstwerk: Das Haus am Sonnenhang in Waldenbuch, umgeben von Sonne, Mond und Garten">
+            <img src="hero.jpg" alt="Kunstwerk: Das Haus am Sonnenhang in Waldenbuch. Manuel, Cordula und Miriam schauen aus dem Haus.">
         </div>
         <div class="hero-overlay"></div>
+
         <div class="hero-content">
             <p class="eyebrow">Save the Date</p>
             <h1>Sommerfest<br>am Sonnenhang</h1>
@@ -37,159 +37,121 @@
                 <div class="countdown-item"><span class="countdown-number" id="cdHours">–</span><span class="countdown-label">Stunden</span></div>
                 <div class="countdown-item"><span class="countdown-number" id="cdMinutes">–</span><span class="countdown-label">Minuten</span></div>
             </div>
-            <a href="#anmeldung" class="btn btn-primary">Ich bin dabei</a>
+            <button type="button" class="btn btn-primary btn-hero" id="openBtn">Ich bin dabei</button>
+            <p class="hosts">Manuel, Cordula &amp; Miriam</p>
         </div>
-        <a href="#intro" class="scroll-hint" aria-label="Nach unten scrollen">
-            <span></span>
-        </a>
-    </header>
+    </main>
 
-    <!-- Intro -->
-    <section class="intro" id="intro">
-        <div class="container narrow">
-            <p class="lead">
-                Liebe Freundinnen und Freunde, liebe Familie,
-            </p>
-            <p>
-                nach dem Sommer 2026 geht es weiter: Im Juli 2027 laden wir wieder ein
-                zum Sommerfest am Sonnenhang in Waldenbuch. Ein ganzes Wochenende lang:
-                Lagerfeuer, Garten, gutes Essen, gute Menschen.
-            </p>
-            <p>
-                Alle Details kommen im Frühjahr. Jetzt zählt nur eins:
-                <strong>Haltet euch das Wochenende frei</strong> und tragt euch unten ein,
-                damit wir euch erreichen können.
-            </p>
-            <p class="signature">
-                Manuel, Cordula &amp; Miriam
-            </p>
-        </div>
-    </section>
+    <!-- Anmelde-Fenster -->
+    <div class="modal" id="modal" hidden>
+        <div class="modal-backdrop" id="modalBackdrop"></div>
+        <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+            <button type="button" class="modal-close" id="closeBtn" aria-label="Schließen">×</button>
 
-    <!-- Anmeldung -->
-    <section class="signup" id="anmeldung">
-        <div class="container narrow">
-            <div class="card">
-                <div id="formView">
-                    <h2>Trag dich ein</h2>
-                    <p class="card-intro">
-                        Damit wir dich mit allen Infos versorgen können, brauchen wir deine
-                        E-Mail-Adresse und deine WhatsApp-Nummer. Dauert 30 Sekunden.
-                    </p>
+            <div id="formView">
+                <h2 id="modalTitle">Trag dich ein</h2>
+                <p class="card-intro">
+                    Damit wir dich mit allen Infos versorgen können, brauchen wir deine
+                    E-Mail-Adresse und deine WhatsApp-Nummer. Dauert 30 Sekunden.
+                </p>
 
-                    <form id="signupForm" novalidate>
-                        <div class="row">
-                            <div class="field">
-                                <label for="vorname">Vorname</label>
-                                <input type="text" id="vorname" name="vorname" autocomplete="given-name" maxlength="80" required>
-                            </div>
-                            <div class="field">
-                                <label for="nachname">Nachname</label>
-                                <input type="text" id="nachname" name="nachname" autocomplete="family-name" maxlength="80" required>
-                            </div>
-                        </div>
-
+                <form id="signupForm" novalidate>
+                    <div class="row">
                         <div class="field">
-                            <label for="email">E-Mail-Adresse</label>
-                            <input type="email" id="email" name="email" autocomplete="email" inputmode="email" maxlength="120" required>
+                            <label for="vorname">Vorname</label>
+                            <input type="text" id="vorname" name="vorname" autocomplete="given-name" maxlength="80" required>
                         </div>
-
                         <div class="field">
-                            <label for="whatsapp">WhatsApp-Nummer</label>
-                            <input type="tel" id="whatsapp" name="whatsapp" autocomplete="tel" inputmode="tel" placeholder="+49 170 1234567" maxlength="30" required>
-                            <small>Mit Ländervorwahl, damit wir dich sicher erreichen.</small>
+                            <label for="nachname">Nachname</label>
+                            <input type="text" id="nachname" name="nachname" autocomplete="family-name" maxlength="80" required>
                         </div>
+                    </div>
 
-                        <fieldset class="field">
-                            <legend>Bringst du weitere Personen mit?</legend>
-                            <div class="choice-group">
-                                <label class="choice">
-                                    <input type="radio" name="begleitung" value="nein" checked>
-                                    <span>Nein, ich komme allein</span>
-                                </label>
-                                <label class="choice">
-                                    <input type="radio" name="begleitung" value="ja">
-                                    <span>Ja, ich bringe jemanden mit</span>
-                                </label>
+                    <div class="field">
+                        <label for="email">E-Mail-Adresse</label>
+                        <input type="email" id="email" name="email" autocomplete="email" inputmode="email" maxlength="120" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="whatsapp">WhatsApp-Nummer</label>
+                        <input type="tel" id="whatsapp" name="whatsapp" autocomplete="tel" inputmode="tel" placeholder="+49 170 1234567" maxlength="30" required>
+                        <small>Mit Ländervorwahl, damit wir dich sicher erreichen.</small>
+                    </div>
+
+                    <fieldset class="field">
+                        <legend>Bringst du weitere Personen mit?</legend>
+                        <div class="choice-group">
+                            <label class="choice">
+                                <input type="radio" name="begleitung" value="nein" checked>
+                                <span>Nein, ich komme allein</span>
+                            </label>
+                            <label class="choice">
+                                <input type="radio" name="begleitung" value="ja">
+                                <span>Ja, ich bringe jemanden mit</span>
+                            </label>
+                        </div>
+                        <div class="field subfield" id="begleitpersonenField" hidden>
+                            <label for="begleitpersonen">Wie viele Personen zusätzlich zu dir?</label>
+                            <div class="stepper">
+                                <button type="button" class="stepper-btn" data-step="-1" aria-label="Eine Person weniger">−</button>
+                                <input type="number" id="begleitpersonen" name="begleitpersonen" min="1" max="20" value="1" inputmode="numeric">
+                                <button type="button" class="stepper-btn" data-step="1" aria-label="Eine Person mehr">+</button>
                             </div>
-                            <div class="field subfield" id="begleitpersonenField" hidden>
-                                <label for="begleitpersonen">Wie viele Personen zusätzlich zu dir?</label>
-                                <div class="stepper">
-                                    <button type="button" class="stepper-btn" data-step="-1" aria-label="Eine Person weniger">−</button>
-                                    <input type="number" id="begleitpersonen" name="begleitpersonen" min="1" max="20" value="1" inputmode="numeric">
-                                    <button type="button" class="stepper-btn" data-step="1" aria-label="Eine Person mehr">+</button>
-                                </div>
-                                <small>Partner:in, Kinder, Freund:innen. Namen brauchen wir jetzt noch nicht.</small>
-                            </div>
-                        </fieldset>
-
-                        <div class="field">
-                            <label for="nachricht">Möchtest du uns noch etwas sagen? <span class="optional">(optional)</span></label>
-                            <textarea id="nachricht" name="nachricht" rows="3" maxlength="500"></textarea>
+                            <small>Partner:in, Kinder, Freund:innen. Namen brauchen wir jetzt noch nicht.</small>
                         </div>
+                    </fieldset>
 
-                        <!-- Honeypot: für Menschen unsichtbar, Bots füllen es aus -->
-                        <div class="hp" aria-hidden="true">
-                            <label for="website">Website</label>
-                            <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
-                        </div>
+                    <div class="field">
+                        <label for="nachricht">Möchtest du uns noch etwas sagen? <span class="optional">(optional)</span></label>
+                        <textarea id="nachricht" name="nachricht" rows="2" maxlength="500"></textarea>
+                    </div>
 
-                        <label class="consent">
-                            <input type="checkbox" id="einwilligung" name="einwilligung" required>
-                            <span>
-                                Ich bin einverstanden, dass meine Angaben gespeichert und ausschließlich
-                                für die Organisation des Sommerfests 2027 verwendet werden. Ich kann sie
-                                jederzeit per Nachricht an Manuel löschen lassen.
-                            </span>
-                        </label>
+                    <!-- Honeypot: für Menschen unsichtbar, Bots füllen es aus -->
+                    <div class="hp" aria-hidden="true">
+                        <label for="website">Website</label>
+                        <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+                    </div>
 
-                        <div class="error" id="formError" role="alert" hidden></div>
+                    <label class="consent">
+                        <input type="checkbox" id="einwilligung" name="einwilligung" required>
+                        <span>
+                            Ich bin einverstanden, dass meine Angaben gespeichert und ausschließlich
+                            für die Organisation des Sommerfests 2027 verwendet werden. Löschung
+                            jederzeit per Nachricht an Manuel.
+                        </span>
+                    </label>
 
-                        <button type="submit" class="btn btn-primary btn-block" id="submitBtn">
-                            <span class="btn-label">Ich bin dabei – haltet mir den Termin frei</span>
-                            <span class="btn-spinner" aria-hidden="true"></span>
-                        </button>
-                    </form>
-                </div>
+                    <div class="error" id="formError" role="alert" hidden></div>
 
-                <div id="successView" class="success" hidden>
-                    <div class="success-icon">☀️</div>
-                    <h2>Danke, <span id="successName">du</span>!</h2>
-                    <p>
-                        Du stehst auf der Liste. Alle Details zum Wochenende bekommst du im
-                        Frühjahr 2027 per WhatsApp.
-                    </p>
-                    <p class="success-date">23. – 25. Juli 2027 · Am Sonnenhang 34 · 71111 Waldenbuch</p>
-                    <a href="#" class="btn btn-secondary" id="icsBtn" download="Sommerfest-am-Sonnenhang-2027.ics">Termin in den Kalender speichern</a>
-                    <p class="share-hint">
-                        Du kennst jemanden, der auch dabei sein sollte? Schick einfach diesen Link weiter.
-                    </p>
-                </div>
+                    <button type="submit" class="btn btn-primary btn-block" id="submitBtn">
+                        <span class="btn-label">Eintragen</span>
+                        <span class="btn-spinner" aria-hidden="true"></span>
+                    </button>
+                </form>
+            </div>
 
-                <div id="duplicateView" class="success" hidden>
-                    <div class="success-icon">🙌</div>
-                    <h2>Du bist schon drin!</h2>
-                    <p>
-                        Mit dieser E-Mail-Adresse gibt es bereits eine Anmeldung. Wenn sich etwas
-                        geändert hat, schreib Manuel einfach kurz per WhatsApp.
-                    </p>
-                    <a href="#" class="btn btn-secondary" id="icsBtn2" download="Sommerfest-am-Sonnenhang-2027.ics">Termin in den Kalender speichern</a>
-                </div>
+            <div id="successView" class="success" hidden>
+                <div class="success-icon">☀️</div>
+                <h2>Danke, <span id="successName">du</span>!</h2>
+                <p>
+                    Du stehst auf der Liste. Alle Details zum Wochenende bekommst du
+                    rechtzeitig per WhatsApp.
+                </p>
+                <p class="success-date">23. – 25. Juli 2027 · Am Sonnenhang 34 · Waldenbuch</p>
+                <button type="button" class="btn btn-secondary" data-close>Schließen</button>
+            </div>
+
+            <div id="duplicateView" class="success" hidden>
+                <div class="success-icon">🙌</div>
+                <h2>Du bist schon drin!</h2>
+                <p>
+                    Mit dieser E-Mail-Adresse gibt es bereits eine Anmeldung. Wenn sich etwas
+                    geändert hat, schreib Manuel einfach kurz per WhatsApp.
+                </p>
+                <button type="button" class="btn btn-secondary" data-close>Schließen</button>
             </div>
         </div>
-    </section>
-
-    <footer class="footer">
-        <div class="container narrow">
-            <p><strong>Sommerfest am Sonnenhang</strong> · Am Sonnenhang 34 · 71111 Waldenbuch</p>
-            <p>Fragen? Schreib Manuel per WhatsApp.</p>
-            <p class="privacy">
-                Datenschutz: Deine Angaben werden verschlüsselt in einer Datenbank in Frankfurt gespeichert
-                und nur von Manuel, Cordula und Miriam zur Organisation des Fests genutzt. Keine Weitergabe,
-                keine Newsletter. Löschung jederzeit auf Zuruf.
-            </p>
-        </div>
-    </footer>
+    </div>
 
     <script src="script.js"></script>
 </body>
