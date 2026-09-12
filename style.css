@@ -229,11 +229,7 @@ textarea { resize: vertical; }
 
 .hp { position: absolute; left: -9999px; top: -9999px; height: 0; overflow: hidden; }
 
-.consent {
-    display: flex; gap: 0.7rem; align-items: flex-start;
-    font-size: 0.82rem; color: var(--ink-soft); margin: 0.2rem 0 1.2rem; cursor: pointer;
-}
-.consent input { margin-top: 0.2rem; width: 18px; height: 18px; flex: none; accent-color: var(--orange); }
+.form-note { font-size: 0.8rem; color: var(--ink-soft); text-align: center; margin: 0.9rem 0 0; }
 
 .error {
     background: #fdecea; color: #8a1c14; border: 1px solid #f5c2bc;

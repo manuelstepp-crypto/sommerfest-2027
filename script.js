@@ -116,8 +116,6 @@ function validate() {
         }
     }
 
-    if (!v('einwilligung').checked) problems.push('Einverständnis zur Speicherung');
-
     if (problems.length) {
         showError('Bitte noch prüfen: ' + problems.join(', ') + '.');
         return null;
