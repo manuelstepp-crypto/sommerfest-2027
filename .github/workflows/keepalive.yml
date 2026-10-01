@@ -1,19 +1,23 @@
 name: Supabase wach halten
 
-# Supabase pausiert kostenlose Projekte nach 7 Tagen ohne Zugriff.
-# Dieser Ping liest einmal pro Woche eine harmlose Tabelle, damit das Formular nicht ins Leere läuft.
+# Supabase pausiert kostenlose Projekte bei zu wenig Datenbank-Aktivität.
+# Laut Doku reichen „ein paar Anfragen an die Datenbank pro Tag über die letzte Woche“.
+# Zweimal pro Woche war zu wenig: Das Projekt wurde um den 20.09.2026 trotzdem pausiert.
+# Deshalb alle 4 Stunden eine echte Datenbankabfrage. GitHub verschiebt Cron-Läufe
+# oft um Stunden; mit sechs Läufen am Tag kommen trotzdem genug an.
 on:
   schedule:
-    - cron: "0 6 * * 1,4"   # Montag + Donnerstag 06:00 UTC
+    - cron: "17 */4 * * *"   # alle 4 Stunden, Minute 17 (volle Stunden sind bei GitHub überlastet)
   workflow_dispatch:
 
 jobs:
   ping:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - name: Heartbeat lesen
         run: |
-          curl --fail --silent --show-error \
+          curl --fail --silent --show-error --retry 3 --retry-delay 20 --retry-all-errors \
             "https://stomqsjexvocbegwzkgy.supabase.co/rest/v1/heartbeat?select=id,note" \
             -H "apikey: sb_publishable_4UigCPskAjYZ-0CryLYUeQ_GfMR9IGQ" \
             -H "Authorization: Bearer sb_publishable_4UigCPskAjYZ-0CryLYUeQ_GfMR9IGQ"
